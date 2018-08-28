@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>LanguageModel</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+
+	<servlet>
+		<servlet-name>IndexController</servlet-name>
+		<servlet-class>controller.IndexController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>IndexController</servlet-name>
+		<url-pattern>/buildIndex</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>RetrivalController</servlet-name>
+		<servlet-class>controller.RetrivalController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RetrivalController</servlet-name>
+		<url-pattern>/boolRetrival</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>SegmentController</servlet-name>
+		<servlet-class>controller.SegmentController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SegmentController</servlet-name>
+		<url-pattern>/segment</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>RemovePunController</servlet-name>
+		<servlet-class>controller.RemovePunController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RemovePunController</servlet-name>
+		<url-pattern>/removePun</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GetFileNamesController</servlet-name>
+		<servlet-class>controller.GetFileNamesController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetFileNamesController</servlet-name>
+		<url-pattern>/getFileNames</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>SplitTxtFileController</servlet-name>
+		<servlet-class>controller.SplitTxtFileController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SplitTxtFileController</servlet-name>
+		<url-pattern>/splitTxtFile</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>RemoveTxtFileController</servlet-name>
+		<servlet-class>controller.RemoveTxtFileController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RemoveTxtFileController</servlet-name>
+		<url-pattern>/removeTxtFile</url-pattern>
+	</servlet-mapping>
+	
+</web-app>
