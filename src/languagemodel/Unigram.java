@@ -29,7 +29,6 @@ public TreeMap<String, String> getResultMap() {
         MyComparator comparator = new MyComparator();
         resultMap = new TreeMap<String, ArrayList<Integer>>((Comparator<? super String>) comparator);//TreeMap按字典顺序排序
 
-        //  Map<String,String> termsMap = new HashMap<String, String>();//建立一个map存放terms和对应的总概率
         Iterator<Integer> docIDs = documents.keySet().iterator();
         Integer docID = null;// 文档ID 1
         ArrayList<String> doc = null; // 文档1
@@ -40,19 +39,13 @@ public TreeMap<String, String> getResultMap() {
             Map<String, Integer> map = new HashMap<String, Integer>();//建立一个map存放terms
             docID = docIDs.next();
             doc = documents.get(docID);
-            //String term = null; // 文档1中的词
              terms = documents.get(docID);
             StringBuffer docContent = new StringBuffer();
-           // docContent.append(docID + "\t ");
-           // docContent.append(docName + "\t ");
             for (int i = 0; i < terms.size(); i++) {
                 docContent.append(terms.get(i));
                 docContent.append(" ");
             }
-            //bw.write(docContent.toString());
             String term=docContent.toString();
-          //  String term= String.valueOf(doc);
-          //  term=term.replaceAll(","," ");//去掉逗号
                 //将字符串用空格分隔
                 String[] ss = term.split("\\s+");
             int count = 0;//单词总数
@@ -64,19 +57,15 @@ public TreeMap<String, String> getResultMap() {
                     }
                     count = count + 1;
                 }
-               // System.out.println(+count);
                 Set<String> keys = map.keySet();
                 int c = 0;
                 String rate = null;
                 for (String key : keys) {
                     int j = 0;
-                   // System.out.println(key + "--有：" + map.get(key) + "个.");
                     double a = map.get(key);
                     double b = count;
-                   // System.out.println(key + "--->" + "[" + docID + "--" + a / b + "]");
                     j++;
                     rate = String.valueOf(a / b);
-                   // System.out.println(key);
                     String key1 = key + "--->" + "[" + docID + "--" + a / b + "]";
                     key1 += "\r\n";
                     if (resultMap.containsKey(key)){
@@ -123,8 +112,6 @@ public TreeMap<String, String> getResultMap() {
                 docIDs.append(']');
                 bw.write(docIDs.toString());
                 bw.newLine();
-               // DocTerm docTerm=new DocTerm();
-                //   System.out.println(docTerm.docId) ;
             }
             bw.flush();
             fw.close();

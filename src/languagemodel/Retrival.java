@@ -46,7 +46,7 @@ public class Retrival {
     }
 
     //对前台的输入进行检索
-    public static ArrayList calcRate(ArrayList selectDicts, TreeMap<Integer, ArrayList<String>> documents, Map resultMap) throws IOException {
+    public static ArrayList calcRate(ArrayList selectDicts, TreeMap<Integer, ArrayList<String>> documents, Map resultMap,Map perpleMap) throws IOException {
         // List selectDicts = new ArrayList();
         // List articles = new ArrayList();
         ArrayList results = new ArrayList();
@@ -59,22 +59,35 @@ public class Retrival {
             articles.add(entry.getKey());
             // System.out.println(entry.getKey());
         }
-        List term = new ArrayList();
+        List term = new ArrayList();//遍历文档中的词
         Iterator itr = resultMap.entrySet().iterator();
         while (itr.hasNext()) {
             Map.Entry entry1 = (Map.Entry) itr.next();
             term.add(entry1.getKey());
         }
         Map finalMap = new HashMap();
+        List articlelist=new ArrayList();
+        for (int j = 0; j < selectDicts.size(); j++) {
+            String dict = (String) selectDicts.get(j);
+            if (resultMap.containsKey(dict)) {//判断查询的词在文档集中是否存在
+                List objList = (List) resultMap.get(dict);
+                for (int k = 0; k < objList.size(); k++) {//根据词取出来的概率做乘法
+                    DocTerm dt = (DocTerm) objList.get(k);
+                    articlelist.add(dt.getDocId());
+
+                }
+            }
+        }
+
         //遍历文章编号
-        for (int i = 0; i < articles.size(); i++) {
-            Integer articleNum = (Integer) articles.get(i);
+        for (int i = 0; i < articlelist.size(); i++) {
+            Integer articleNum = (Integer) articlelist.get(i);
             if (articleNum <= articles.size()) {
                 //在文章中遍历选中的词
                 for (int j = 0; j < selectDicts.size(); j++) {
                     String dict = (String) selectDicts.get(j);
-                    if (resultMap.containsKey(dict)) {//判断查询的词在文档集中是否存在
-                        List objList = (List) resultMap.get(dict);
+                    if (perpleMap.containsKey(dict)) {//判断查询的词在文档集中是否存在
+                        List objList = (List) perpleMap.get(dict);
                         for (int k = 0; k < objList.size(); k++) {//根据词取出来的概率做乘法
                             DocTerm dt = (DocTerm) objList.get(k);
                             if (dt.getDocId().equals(articleNum)) {
@@ -104,7 +117,7 @@ public class Retrival {
             }
         });
         for (Map.Entry<Integer, Double> mapping : list) {
-            // System.out.println(mapping.getKey() + ":" + mapping.getValue());
+            System.out.println(mapping.getKey() + ":" + mapping.getValue());
             results.addAll(Collections.singleton(mapping.getKey()));
         }
         // System.out.println("查询完毕2。");

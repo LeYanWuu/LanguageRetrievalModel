@@ -42,7 +42,6 @@ public class Perplexity {
             }
             count = count + 1;
         }
-      //  System.out.println(+count);
         Set<String> keys = map.keySet();
         int c = 0;
         String rate = null;
@@ -50,14 +49,11 @@ public class Perplexity {
             DocTerm dt = new DocTerm();
             dt.setTerm(key);
             int i = 0;
-           // System.out.println(key + "--有：" + map.get(key) + "个.");
             double a = map.get(key);
             double b = count;
-           // System.out.println(key + "--->" + "[" + a / b + "]");
             i++;
             rate = String.valueOf(a / b);
             dt.setRate(rate);
-           // System.out.println(key);
             String key1 = key + "--->" + "["  + a / b + "]";
             key1 += "\r\n";
             termsMap.put(key,rate);//将结果存入map
@@ -65,11 +61,6 @@ public class Perplexity {
     }
 //对数据进行平滑
     public Map buildPerpleMap(Double λ,Map resultMap,TreeMap<Integer, ArrayList<String>> documents) throws IOException {
-        //Double λ=λ;//平滑系数
-        //List ID = dP();//调用,获得文档ID
-        //Index index = new Index();
-       // index.buildResultMap();
-       // Map resultMap = index.geRresultMap();//获得resultMap中存放的需要平滑的每个文档中terms的概率
         //平滑
         HashMap perpleMap = new HashMap();//用于存放平滑后的数据
         List articles = new ArrayList();//存放文档ID
@@ -78,9 +69,6 @@ public class Perplexity {
 //将原来MAP的KEY加入list 里面
             articles.add(entry.getKey());
         }
-       // Perplexity p = new Perplexity();
-       // List ID= p.buildTermsMap();
-        //Map termsMap = p.getTermsMap();
         Iterator itr = resultMap.entrySet().iterator();
         List list = new ArrayList();//存放termsMap里的terms
         while (itr.hasNext()) {
@@ -90,15 +78,13 @@ public class Perplexity {
         for (int i = 0; i < list.size(); i++) {
             mergerList(λ,(String) list.get(i),resultMap,termsMap,articles);
         }
-
-        Iterator it1 = resultMap.entrySet().iterator();
-        // List lists = new ArrayList();
+//验证
+      /*  Iterator it1 = resultMap.entrySet().iterator();
         while (it1.hasNext()) {
             Map.Entry entry = (Map.Entry) it1.next();
-            //  lists.add(entry.getValue());//取出需要平滑的terms
             System.out.println(entry.getKey());
             System.out.println(entry.getValue());
-        }
+        }*/
         return resultMap;
 
     }
@@ -123,7 +109,7 @@ public class Perplexity {
                     Double n = new Double(term1.getRate());
                     Double tmp = (1 - λ) * n + λ * m;//平滑
                     term1.setRate("" + tmp);//将平滑后的概率存入
-                    //TODO 计算rate
+                    //计算rate
                     newList.add(term1);
                     perpleMap.put(term,newList);
                     break; //跳出此循环
@@ -136,7 +122,6 @@ public class Perplexity {
                 Double m = new Double(rate);
                 Double tmp = λ * m;
                 newTerm.setRate("" + tmp);//将平滑后的概率存入
-                //newTerm.setRate(rate); //TODO 计算rate
                 newTerm.setTerm(term);
             }
 
